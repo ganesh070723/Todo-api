@@ -20,11 +20,12 @@ from django.conf import settings
 from django.views.static import serve
 from todo_app.views import TaskList, TaskDetail
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf.urls.static import static
 urlpatterns = [
      path('admin/', admin.site.urls),
     path('tasks/', TaskList.as_view(), name='task-list'),
     path('tasks/<int:pk>/', TaskDetail.as_view(), name='task-detail'),
     re_path(r'^media/(?P<path>.*)$', serve,{'document_root':       settings.MEDIA_ROOT}), 
     re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += staticfiles_urlpatterns()
